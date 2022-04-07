@@ -1,0 +1,41 @@
+﻿<Application x:Class="Gallery.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Gallery"
+             xmlns:helpers="clr-namespace:Gallery.ViewModel.Helpers"
+             xmlns:viewModel="clr-namespace:Gallery.ViewModel"
+             xmlns:view="clr-namespace:Gallery.View.Controls">
+    <Application.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewModel:GalleryViewModel }">
+                <view:GalleryControl/>
+            </DataTemplate> 
+            <DataTemplate DataType="{x:Type viewModel:OrderViewModel }">
+                <view:OrderControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AuthorizationViewModel }">
+                <view:AuthorizationControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:ProfileViewModel }">
+                <view:ProfileControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PictureViewModel }">
+                <view:PictureControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:ReviewsViewModel }">
+                <view:ReviewControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AddPictureVewModel }">
+                <view:AddPictureControl/>
+            </DataTemplate>
+            <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <helpers:BooleanToVisibilityBackConverter x:Key="BooleanToVisibilityBackConverter"/>
+            <helpers:ObjectToVisibilityBackConverter x:Key="ObjectToVisibilityBackConverter"/>
+            <helpers:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
+            <helpers:DateConverter x:Key="DateConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
