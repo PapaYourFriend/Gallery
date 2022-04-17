@@ -4,6 +4,7 @@ using Gallery.ViewModel.Common;
 using Gallery.ViewModel.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Gallery.ViewModel
 {
@@ -112,9 +113,6 @@ namespace Gallery.ViewModel
                             CurrentUser.ProfileId = null;
                             CurrentUser.DataPath = null;
                             _mainWindow.CurrentViewModel = new GalleryViewModel(_mainWindow);
-                            _mainWindow.AdminViewModel.Orders = new ObservableCollection<OrderModel>(_mainWindow.OrderService.GetAllOrderModels());
-                            _mainWindow.AdminViewModel.Users = new ObservableCollection<Profile>(_mainWindow.AuthenticationService.GetAllUsers());
-                            _mainWindow.AdminViewModel.Reviews = new ObservableCollection<ReviewModel>(_mainWindow.ReviewService.GetAllReviews());
                         }
                     }));
             }
@@ -168,9 +166,20 @@ namespace Gallery.ViewModel
                         var path = _mainWindow.FileUploadingService.OpenFileDialog();
                         if(!string.IsNullOrEmpty(path))
                         {
-                            var endPath = await _mainWindow.FileUploadingService.AddProfileDataAsync(path, (int)CurrentUser.ProfileId);
+                            try
+                            {
+                                var endPath = await _mainWindow.FileUploadingService.AddProfileDataAsync(path, (int)CurrentUser.ProfileId);
+                                User.DataPath = endPath;
+                            }
+                            catch(IOException ex)
+                            {
+                                _mainWindow.MessageBoxService.ShowMessageBox(
+                                    ex.Message,
+                                    "Profile",
+                                    System.Windows.Forms.MessageBoxButtons.OK,
+                                    System.Windows.Forms.MessageBoxIcon.Warning);
+                            }
 
-                            User.DataPath = endPath;
                         }
                     }));
             }

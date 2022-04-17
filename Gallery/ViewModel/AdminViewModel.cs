@@ -47,6 +47,36 @@ namespace Gallery.ViewModel
         private HashSet<Item> _mCheckedStatuses;
         public IEnumerable<Item> Statuses { get { return _mStatuses; } }
 
+        public AdminViewModel(MainWindowViewModel mainWindow)
+        {
+            _authenticationService = mainWindow.AuthenticationService;
+            _orderService = mainWindow.OrderService;
+            _messageBoxService = mainWindow.MessageBoxService;
+            _mailService = mainWindow.MailService;
+            _galleryService = mainWindow.GalleryService;
+            _reviewService = mainWindow.ReviewService;
+            _dialogService = mainWindow.DialogService;
+            _fileService = mainWindow.FileUploadingService;
+
+            Users = new ObservableCollection<Profile>(_authenticationService.GetAllUsers());
+            Orders = new ObservableCollection<OrderModel>(_orderService.GetAllOrderModels());
+            Pictures = new ObservableCollection<PictureModel>(_galleryService.GetAllPictures());
+            Reviews = new ObservableCollection<ReviewModel>(_reviewService.GetAllReviews());
+
+            _ordersFull = new List<OrderModel>(Orders);
+            _usersFull = new List<Profile>(Users);
+            _picturesFull = new List<PictureModel>(Pictures);
+
+            _mStatuses = new ObservableCollection<Item>();
+            _mCheckedStatuses = new HashSet<Item>();
+            _mStatuses.CollectionChanged += Status_CollectionChanged;
+
+            foreach (var item in _orderService.GetAllOrdersStatuses())
+            {
+                _mStatuses.Add(item);
+            }
+        }
+
         public AdminViewModel(IAuthenticationService authenticationService,
             IOrderService orderService,
             IMessageBoxService messageBoxService,
@@ -281,7 +311,7 @@ namespace Gallery.ViewModel
                     (_addPictureCommand = new RelayCommand((obj) =>
                     {
                         var addPic = new PictureDTO();
-                        DialogViewModel dialog = new DialogViewModel(new AddPictureVewModel(ref addPic, _fileService));
+                        DialogViewModel dialog = new DialogViewModel(new AddPictureVewModel(ref addPic, _fileService, _messageBoxService));
                         bool result = (bool)_dialogService.ShowDialog("Picture", dialog);
                         if(result)
                         {
@@ -289,6 +319,7 @@ namespace Gallery.ViewModel
                             {
                                 var newModel = _galleryService.AddPicture(addPic);
                                 Pictures.Add(newModel);
+                                _picturesFull = new List<PictureModel>(Pictures);
                             }
                             catch(ArgumentNullException ex)
                             {

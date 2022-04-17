@@ -162,7 +162,7 @@ namespace Gallery.ViewModel
                     {
                         order.OrderStatusId = (int)OrderStatuses.OnTheWay;
                     }
-                    else if (DateTime.Now.Day - order.CreatedAt.Day == (int)OrderStatuses.OnTheWay)
+                    else if (DateTime.Now.Day - order.CreatedAt.Day >= (int)OrderStatuses.OnTheWay)
                     {
                         order.OrderStatusId = (int)OrderStatuses.Accepted;
                     }

@@ -70,7 +70,7 @@ namespace Gallery.ViewModel
                         }
                         if(admin)
                         {
-                            AdminWindow adminWindow = new AdminWindow(_mainWindowViewModel.AdminViewModel);
+                            AdminWindow adminWindow = new AdminWindow(new AdminViewModel(_mainWindowViewModel));
                             adminWindow.Show();
                             _mainWindowViewModel.CloseAction();
                         }

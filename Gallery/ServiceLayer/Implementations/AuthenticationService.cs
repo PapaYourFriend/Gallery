@@ -102,7 +102,7 @@ namespace Gallery.ServiceLayer.Implementations
             foreach(var order in userOrders)
             {
                 if(order.OrderStatusId != (int)OrderStatuses.Accepted 
-                    || order.OrderStatusId != (int)OrderStatuses.Abandoned)
+                    && order.OrderStatusId != (int)OrderStatuses.Abandoned)
                 {
                     order.OrderStatusId = (int)OrderStatuses.Abandoned;
                 }

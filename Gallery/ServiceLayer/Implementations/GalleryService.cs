@@ -142,8 +142,8 @@ namespace Gallery.ServiceLayer.Implementations
                 };
 
                 if(_orderRepository.GetOrderByPictureIdOrDefault(picture.PictureId) != null 
-                    && _orderRepository.GetOrderByPictureIdOrDefault(picture.PictureId).OrderStatusId != (int)OrderStatuses.Abandoned
-                    && _orderRepository.GetOrderByPictureIdOrDefault(picture.PictureId).OrderStatusId != (int)OrderStatuses.Accepted)
+                    && (_orderRepository.GetOrderByPictureIdOrDefault(picture.PictureId).OrderStatusId != (int)OrderStatuses.Abandoned
+                    || _orderRepository.GetOrderByPictureIdOrDefault(picture.PictureId).OrderStatusId != (int)OrderStatuses.Accepted))
                 {
                     pictureModel.IsOrdered = true;
                 }

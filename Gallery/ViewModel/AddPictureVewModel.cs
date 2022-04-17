@@ -5,6 +5,7 @@ using Gallery.ViewModel.DTOs;
 using Gallery.ViewModel.Helpers;
 using Microsoft.VisualStudio.PlatformUI;
 using System;
+using System.IO;
 using System.Windows.Input;
 
 namespace Gallery.ViewModel
@@ -13,9 +14,12 @@ namespace Gallery.ViewModel
     {
         private readonly Lazy<DelegateCommand> _okCommand;
         private readonly IFileUploadingService _service;
+        private readonly IMessageBoxService _messageBox;
         private RelayCommand _addPicCommand;
 
-        public AddPictureVewModel(ref PictureDTO pictureDTO, IFileUploadingService service)
+        public AddPictureVewModel(ref PictureDTO pictureDTO,
+            IFileUploadingService service,
+            IMessageBoxService messageBox)
         {
             this._okCommand = new Lazy<DelegateCommand>(() =>
                 new DelegateCommand(() =>
@@ -23,6 +27,7 @@ namespace Gallery.ViewModel
                         new RequestCloseDialogEventArgs(true)), () => !NewPic.HasErrors));
             NewPic = pictureDTO;
             _service = service;
+            _messageBox = messageBox;
         }
         public ICommand OkCommand
         {
@@ -43,9 +48,20 @@ namespace Gallery.ViewModel
                         var path = _service.OpenFileDialog();
                         if (!string.IsNullOrEmpty(path))
                         {
-                            var endPath = await _service.AddPictureDataAsync(path);
+                            try
+                            {
+                                var endPath = await _service.AddPictureDataAsync(path);
+                                NewPic.DataPath = endPath;
+                            }
+                            catch (IOException ex)
+                            {
+                                _messageBox.ShowMessageBox(
+                                    ex.Message,
+                                    "Picture",
+                                    System.Windows.Forms.MessageBoxButtons.OK,
+                                    System.Windows.Forms.MessageBoxIcon.Warning);
+                            }
 
-                            NewPic.DataPath = endPath;
                         }
                     }));
             }

@@ -168,7 +168,5 @@ C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\View\Co
 C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\View\Controls\ReviewControl.baml
 C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\View\Windows\AdminWindow.g.cs
 C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\View\Windows\AdminWindow.baml
-C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\Gallery.Migrations.Initial.resources
 C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\View\Controls\AddPictureControl.g.cs
 C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\View\Controls\AddPictureControl.baml
-C:\Users\m.samaryn\source\repos\Курсачи\Gallery\Gallery\obj\Debug\Gallery.Migrations.sizey.resources
